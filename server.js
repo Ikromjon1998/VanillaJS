@@ -1,12 +1,14 @@
 const http = require('http');
 const PORT = process.env.PORT || 5001;
-const todos = require('todos');
+const todos = require('./todos');
 
 const server = http.createServer((request, response)=> {
-    response.writeHead(200, {
-        "content-type": "text/plain"
-    })
-    response.end('Hello')
+    if(request.url === '/api/v1/todos' && request.method === 'GET') {
+        response.writeHead(200, {
+            "content-type": "application/json"
+        })
+        response.end(JSON.stringify(todos));
+    }
 })
 
 server.listen(PORT, ()  => {
